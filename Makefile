@@ -4,6 +4,8 @@ BINDIR ?= $(DESTDIR)/usr/bin
 COMMIT=$(shell git rev-parse HEAD 2> /dev/null || true)
 EPOCH_TEST_COMMIT ?= $(shell git tag | tail -1)
 
+EXTRA_LDFLAGS ?= ""
+
 default: all
 
 help:
@@ -27,7 +29,7 @@ check-license:
 
 .PHONY: tool
 tool:
-	go build -ldflags "-X main.gitCommit=${COMMIT}" -o oci-image-tool ./cmd/oci-image-tool
+	go build -ldflags "-X main.gitCommit=${COMMIT} ${EXTRA_LDFLAGS}" -o oci-image-tool ./cmd/oci-image-tool
 
 
 all: tool man
